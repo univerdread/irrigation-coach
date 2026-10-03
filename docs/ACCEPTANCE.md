@@ -4,7 +4,7 @@ Build addendum: "Acceptance on a named phone in flight mode: the app opens, comp
 
 ## Setup
 
-1. `npm run build && npm run preview -w app`, then open `http://<laptop-ip>:4641` on the phone over the same Wi-Fi (or deploy the `app/dist` folder anywhere static).
+1. Serve `app/dist` over **HTTPS** (e.g. GitHub Pages or any static host) and open it on the phone. Service workers only install on HTTPS or `localhost`, so `http://<laptop-ip>:4641` over Wi-Fi will open but will **not** work offline.
 2. Load once online. Wait for "offline ready" (service worker installed). Optionally "Add to home screen".
 3. Turn on flight mode. Close the browser fully.
 
