@@ -140,6 +140,8 @@ export interface PlotPlan {
 
 export interface FarmPlan {
   engine_version: string;
+  /** Which DeficitSource produced today's deficit; needed to recompute a logged plan. */
+  deficit_source: string;
   today: string;
   status: 'pump' | 'no_pump' | 'paused';
   question?: Question;

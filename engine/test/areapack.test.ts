@@ -34,3 +34,22 @@ describe('area pack lookup', () => {
     expect(lookupAreaPack(pack, -3.5, 37.5)).toBeNull();
   });
 });
+
+describe('real demo area pack (built by data/build_area_pack.py from open data)', () => {
+  it('validates against the schema and decodes plausible soil at Kimana', async () => {
+    const { readFileSync, readdirSync, existsSync } = await import('node:fs');
+    const { join } = await import('node:path');
+    const Ajv2020 = (await import('ajv/dist/2020')).default;
+    const path = join(import.meta.dirname, '..', '..', 'app', 'src', 'demo', 'packs', 'ke-kajiado-kimana-demo.json');
+    if (!existsSync(path)) return;
+    const schemas = join(import.meta.dirname, '..', '..', 'contracts', 'schemas');
+    const ajv = new Ajv2020({ strict: false });
+    for (const f of readdirSync(schemas).filter((f) => f.endsWith('.json'))) ajv.addSchema(JSON.parse(readFileSync(join(schemas, f), 'utf8')));
+    const real = JSON.parse(readFileSync(path, 'utf8')) as AreaPack;
+    const validate = ajv.getSchema('urn:irrigation-coach:area-pack')!;
+    expect(validate(real), JSON.stringify(validate.errors)).toBe(true);
+    const v = lookupAreaPack(real, -2.8, 37.53)!.values;
+    expect(v.sand_pct! + v.clay_pct!).toBeLessThanOrEqual(100);
+    expect(v.oc_g_per_kg!).toBeGreaterThan(0);
+  });
+});

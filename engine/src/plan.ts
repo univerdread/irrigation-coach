@@ -204,6 +204,7 @@ export function planFarm(input: FarmInput, opts: PlanOptions = {}): FarmPlan {
   const provenances = provenancesOf(input);
   return {
     engine_version: ENGINE_VERSION,
+    deficit_source: source.id,
     today: input.today,
     status: total > 0 ? 'pump' : firstQuestion ? 'paused' : 'no_pump',
     ...(firstQuestion ? { question: firstQuestion } : {}),
