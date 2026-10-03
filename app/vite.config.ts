@@ -4,7 +4,9 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 // Offline-first: every built asset (JS, CSS, HTML, JSON data, voice clips) is precached so the
 // app opens, computes and logs in flight mode after one online load.
+// BASE_PATH is set by the GitHub Pages workflow (/irrigation-coach/); local builds serve from /.
 export default defineConfig({
+  base: process.env.BASE_PATH ?? '/',
   plugins: [
     react(),
     VitePWA({
