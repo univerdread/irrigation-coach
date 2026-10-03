@@ -7,6 +7,7 @@ import {
   kcForStage,
   getCrop,
   saxtonRawls,
+  dailyEtc,
   omPctFromOcGPerKg,
   usdaTextureClass,
   ribbonTextureClass,
@@ -119,5 +120,22 @@ describe('USDA texture triangle and ribbon test', () => {
     expect(Math.abs(unsure.sand_pct - ribbon.sand_pct)).toBeLessThan(Math.abs(unsure.sand_pct - 65));
     expect(Math.abs(sure.sand_pct - 65)).toBeLessThan(Math.abs(sure.sand_pct - ribbon.sand_pct));
     expect(unsure.sand_sd).toBeLessThan(25);
+  });
+});
+
+describe('daily ETc series from climatology', () => {
+  it('is Kc x Hargreaves(month climatology, Ra of that day)', () => {
+    const tmax = Array(12).fill(30);
+    const tmin = Array(12).fill(10);
+    const s = dailyEtc({ lat_deg: -2.8, tmax_c: tmax, tmin_c: tmin, crop_id: 'tomato', stage: 'mid', start: '2026-10-03', days: 3 });
+    expect(s.map((d) => d.date)).toEqual(['2026-10-03', '2026-10-04', '2026-10-05']);
+    const ra = extraterrestrialRadiation(-2.8, dayOfYear('2026-10-03'));
+    expect(s[0]!.et0_mm).toBeCloseTo(hargreavesEt0(10, 30, ra), 12);
+    expect(s[0]!.etc_mm).toBeCloseTo(1.15 * s[0]!.et0_mm, 12);
+  });
+  it('follows the planting date through the Kc curve', () => {
+    const s = dailyEtc({ lat_deg: 0, tmax_c: Array(12).fill(30), tmin_c: Array(12).fill(15), crop_id: 'tomato', planting_date: '2026-10-01', start: '2026-10-01', days: 120 });
+    expect(s[0]!.kc).toBeCloseTo(0.6, 10);
+    expect(s[90]!.kc).toBeCloseTo(1.15, 10);
   });
 });

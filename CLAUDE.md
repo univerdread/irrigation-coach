@@ -14,7 +14,9 @@ Read [docs/idea.md](docs/idea.md) (source of truth), [STATE.md](STATE.md) (posit
 8. **Every UI string lives in `app/src/i18n/{en,sw}.json`.** Same keys, same placeholders (tested). Kiswahili is a draft until a native speaker signs off. No spelled-out numbers in templates.
 9. **Every parameter has a status** in docs/PARAMETERS.md (sourced / placeholder / assumed). Add new ones there.
 10. **Honest claims:** farmer-level fuel/fertilizer/labour savings, not basin water savings. Simulated savings are called simulated.
+11. **Every device gets the same answer.** Farm state changes go through engine/src/state.ts; channels and app pass the same `PlanOptions`. SMS text must stay GSM-7 and ≤ 160 characters (tested).
+12. **The folder is live-synced to teammates by SyncHack** (`.git`, `node_modules`, `.env` excepted). Every save reaches their Macs; keep to your role's folder and don't leave half-written files.
 
 ## Commands
 
-`npm test` · `npm run typecheck` · `npm run dev` (port 4640) · `npm run build` · `uv run data/build_area_pack.py --help`
+`npm test` · `npm run typecheck` · `npm run dev` (port 4640) · `npm run build` · `npm run gateway` (port 4650) · `uv run data/build_area_pack.py --help`

@@ -72,10 +72,13 @@ export interface PlotInput {
   /** Rain reported since deficit.as_of, mm. null = unknown. */
   rain_since_mm: Quantity | null;
   moisture_check?: MoistureCheck;
+  /** Earlier soil checks in a row that disagreed with the engine (not counting moisture_check). */
   consecutive_disagreements?: number;
   /** FIXTURE ONLY: bypass the trigger. Recorded in the plan's assumptions. */
   assume_due?: boolean;
   context?: PlotContext;
+  /** Plot centre (GPS walk). Used to look up the soil map and climatology; never leaves the phone unless shared. */
+  location?: { lat: number; lon: number };
 }
 
 export interface EffectiveRainModel {

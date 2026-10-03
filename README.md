@@ -4,15 +4,20 @@ An offline phone coach that tells a smallholder who has just bought a pump **how
 
 > *"Washa pampu kwa saa 4 na dakika 10"*: run the pump for 4 hours 10 minutes.
 
-The idea, evidence and build rules: **[docs/idea.md](docs/idea.md)**. Where we are and what's next: **[STATE.md](STATE.md)**.
+**Try it:** https://univerdread.github.io/irrigation-coach/ (works offline after the first load; add it to the home screen).
+
+**For the jury:** [docs/solution-brief.md](docs/solution-brief.md). The idea and evidence: [docs/idea.md](docs/idea.md). Where we are: [STATE.md](STATE.md).
+
+**Any phone.** Smartphones get the offline app. Basic phones get the same plan by **USSD and SMS** ([channels/](channels/README.md)): no data bundle, no app, 2G is enough. A lead farmer or dealer can relay the plan to a neighbour with one tap.
 
 ## Run it
 
 ```bash
 npm install
-npm test          # engine (golden fixtures, FAO-56, Saxton & Rawls, offline guard) + app core path
+npm test          # engine + channels + app (150+ tests: golden fixtures, FAO-56, Saxton & Rawls, SMS/USSD, offline guard)
 npm run dev       # http://localhost:4640
 npm run build     # offline-first PWA in app/dist (service worker precaches everything)
+npm run gateway   # basic-phone USSD/SMS gateway on :4650 (see channels/README.md)
 ```
 
 Node 22+. The data pipeline uses [uv](https://docs.astral.sh/uv/): `uv run data/build_area_pack.py --help`.
@@ -23,7 +28,8 @@ Node 22+. The data pipeline uses [uv](https://docs.astral.sh/uv/): `uv run data/
 |---|---|---|
 | `contracts/` | **The data contract.** JSON Schemas (farm input, plan, log entry, area pack, AI functions), language-neutral golden fixtures, crop and method tables with sources. | everyone |
 | `engine/` | Deterministic engine, zero runtime dependencies, no AI, no network: FAO-56 (Hargreaves ETo, Kc, root-zone balance), Saxton & Rawls, texture triangle + ribbon test, pause rule, cap allocator, pre-purchase check. | 2. Engine + model |
-| `app/` | React + Vite PWA: plot inputs, today's plan, explanation and log. EN + Kiswahili (draft). AI adapter boundary in `app/src/ai/`. | 3. App |
+| `app/` | React + Vite PWA: guided setup (paces/GPS, ribbon test, bucket stopwatch), today's plan with pump timer, season chart and pump check, log, basic-phone simulator. EN + Kiswahili (draft). AI adapter boundary in `app/src/ai/`. | 3. App |
+| `channels/` | Basic phones: USSD menu, daily SMS with one-word replies, HTTP gateway (Africa's Talking format). Same engine, same answers. | 3. App |
 | `data/` | Area-pack builder: iSDAsoil + Copernicus DEM + NASA POWER, straight from public cloud storage. | 1. Data |
 | `content/` | Voice clip bank, photo-dataset protocol, demo script, slide skeleton. | 4. Pitch + content |
 | `docs/` | Idea doc, decisions, parameter registry (sourced vs assumed), model integration guide, flight-mode acceptance form. | everyone |
@@ -32,10 +38,10 @@ Node 22+. The data pipeline uses [uv](https://docs.astral.sh/uv/): `uv run data/
 
 ```
 area pack (soil map + climatology)  ─┐
-ribbon test, bucket test (onboarding) ├─► engine.planFarm(input) ─► plan JSON ─► UI (rounded for display)
-daily: rain reading, "done" tap      ─┘          ▲                       │
-weekly: soil photo ─► on-device model ───────────┘ (moisture check)      └─► on-device model phrases it
-                                                                             (numbers checked, template fallback)
+ribbon test, bucket test (onboarding) ├─► engine.planFarm(input) ─► plan JSON ─┬─► smartphone app (rounded for display)
+daily: rain reading, "done" tap      ─┘          ▲                            ├─► USSD menu / daily SMS (basic phones)
+weekly: soil photo ─► on-device model ───────────┘ (moisture check)           └─► on-device model phrases it
+                                                                                  (numbers checked, template fallback)
 ```
 
 The engine decides; models only observe (soil photo) or phrase (text). See [docs/integration.md](docs/integration.md).

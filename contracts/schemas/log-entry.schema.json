@@ -3,34 +3,84 @@
   "$id": "urn:irrigation-coach:log-entry",
   "title": "One daily log entry. Stores the full engine input and output so any plan can be recomputed with the recorded engine version. Self-reported: not independent evidence until spot-checked.",
   "type": "object",
-  "required": ["id", "created_at", "engine_version", "input", "plan", "action"],
+  "required": [
+    "id",
+    "created_at",
+    "engine_version",
+    "input",
+    "plan",
+    "action"
+  ],
   "properties": {
-    "id": { "type": "string" },
-    "created_at": { "$ref": "urn:irrigation-coach:common#/$defs/datetime" },
-    "engine_version": { "type": "string" },
-    "input": { "$ref": "urn:irrigation-coach:farm-input" },
-    "plan": { "$ref": "urn:irrigation-coach:farm-plan" },
+    "id": {
+      "type": "string"
+    },
+    "created_at": {
+      "$ref": "urn:irrigation-coach:common#/$defs/datetime"
+    },
+    "engine_version": {
+      "type": "string"
+    },
+    "input": {
+      "$ref": "urn:irrigation-coach:farm-input"
+    },
+    "plan": {
+      "$ref": "urn:irrigation-coach:farm-plan"
+    },
     "action": {
       "description": "What the farmer reported doing. Self-reported.",
       "type": "object",
-      "required": ["kind"],
+      "required": [
+        "kind"
+      ],
       "properties": {
-        "kind": { "enum": ["pending", "done", "adjusted", "skipped"] },
-        "litres_applied": { "type": "number", "minimum": 0 },
-        "minutes_run": { "type": "number", "minimum": 0 },
-        "reported_at": { "$ref": "urn:irrigation-coach:common#/$defs/datetime" },
-        "provenance": { "const": "reported" }
+        "kind": {
+          "enum": [
+            "pending",
+            "done",
+            "adjusted",
+            "skipped"
+          ]
+        },
+        "litres_applied": {
+          "type": "number",
+          "minimum": 0
+        },
+        "minutes_run": {
+          "type": "number",
+          "minimum": 0
+        },
+        "reported_at": {
+          "$ref": "urn:irrigation-coach:common#/$defs/datetime"
+        },
+        "provenance": {
+          "const": "reported"
+        }
       },
       "additionalProperties": false
     },
     "explanation": {
       "type": "object",
-      "required": ["text", "producer"],
+      "required": [
+        "text",
+        "producer"
+      ],
       "properties": {
-        "text": { "type": "string" },
-        "producer": { "enum": ["template", "model"] },
-        "model_id": { "type": "string" },
-        "locale": { "type": "string" }
+        "text": {
+          "type": "string"
+        },
+        "producer": {
+          "enum": [
+            "template",
+            "model"
+          ]
+        },
+        "model_id": {
+          "type": "string"
+        },
+        "locale": {
+          "type": "string"
+        }
       },
       "additionalProperties": false
     },
@@ -39,19 +89,54 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["kind", "at"],
+        "required": [
+          "kind",
+          "at"
+        ],
         "properties": {
-          "kind": { "enum": ["fertilizer_applied", "moisture_check", "rain_reading", "bucket_test", "ribbon_test"] },
-          "at": { "$ref": "urn:irrigation-coach:common#/$defs/datetime" },
-          "plot_id": { "type": "string" },
-          "data": { "type": "object" }
+          "kind": {
+            "enum": [
+              "fertilizer_applied",
+              "moisture_check",
+              "rain_reading",
+              "bucket_test",
+              "ribbon_test"
+            ]
+          },
+          "at": {
+            "$ref": "urn:irrigation-coach:common#/$defs/datetime"
+          },
+          "plot_id": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          }
         }
       }
     },
     "shared_with": {
       "description": "Farmer owns the data: empty unless they explicitly chose to share with a named party.",
       "type": "array",
-      "items": { "type": "object", "required": ["party", "at"], "properties": { "party": { "type": "string" }, "at": { "$ref": "urn:irrigation-coach:common#/$defs/datetime" } } }
+      "items": {
+        "type": "object",
+        "required": [
+          "party",
+          "at"
+        ],
+        "properties": {
+          "party": {
+            "type": "string"
+          },
+          "at": {
+            "$ref": "urn:irrigation-coach:common#/$defs/datetime"
+          }
+        }
+      }
+    },
+    "demo": {
+      "type": "boolean",
+      "description": "true for demo-scenario entries; they never mix with the farmer's own log."
     }
   },
   "additionalProperties": false

@@ -89,6 +89,7 @@ export function PlotInputs({ farm, locale, onChange }: Props) {
 
   return (
     <section className="plot-inputs">
+      <p className="hint">{t(locale, 'plot.weather_note')}</p>
       {farm.plots.length > 1 && (
         <div className="row tabs-small">
           {farm.plots.map((p, i) => (

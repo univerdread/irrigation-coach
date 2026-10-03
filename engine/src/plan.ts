@@ -131,7 +131,8 @@ export function planPlot(plot: PlotInput, input: FarmInput, flowLpm: number | nu
   const isNewer = check && check.observed_at >= plot.deficit!.as_of;
   const wouldPump = deficit > 0 && (deficit >= trigger || plot.assume_due === true);
   if (isNewer && ((wouldPump && check.band === 'wet') || (!wouldPump && check.band === 'dry'))) {
-    const escalate = (plot.consecutive_disagreements ?? 0) >= 2;
+    // Repeated disagreement (this check plus at least one earlier one in a row) goes to the extension officer.
+    const escalate = (plot.consecutive_disagreements ?? 0) >= 1;
     return paused(
       plot,
       escalate ? 'escalate' : 'contradiction',

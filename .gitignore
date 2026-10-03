@@ -10,3 +10,5 @@ data/out/*.tif
 __pycache__/
 # never commit raw photo datasets (consent + size); see content/photo-dataset-protocol.md
 photos/
+# basic-phone gateway runtime data (personal data: never commit)
+channels/data/

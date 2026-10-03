@@ -58,3 +58,16 @@ Answers the idea doc's open question "which numerical parameters are sourced, an
 | Sand, clay, OC (+ SD) | iSDAsoil 30 m, CC-BY 4.0 | sourced; plot-scale error is large (sand RMSE 13.7, clay 9.6 pp): a prior, not a measurement |
 | Slope | Copernicus DEM GLO-30 | sourced |
 | Tmax, Tmin, rain climatology | NASA POWER | sourced; coarse grid (mixes Kilimanjaro slopes into Kimana's cell). Hargreaves with a large diurnal range likely overestimates ETo. Check against a local station before claiming accuracy. |
+
+## Setup and channels (added with the device layer)
+
+| Parameter | Value | Where | Status |
+|---|---|---|---|
+| One walking pace | 0.75 m | `app/src/lib/geo.ts` | **assumed**: calibrate on a measured 10 m |
+| Plausible plot area | 20 m² – 2 ha | `app/src/screens/Setup.tsx` | **assumed** (D27) |
+| Plausible pump flow | 3 – 1,500 L/min; bucket ≥ 2 s | same | **assumed** (D27) |
+| Starting deficit from a first soil check | wet 0 / damp ½ trigger / dry = trigger | `engine/src/state.ts` | **assumed** (D25) |
+| SMS length | ≤ 160 GSM-7 characters | `channels/src/gsm.ts` | standard (3GPP TS 23.038) |
+| USSD screen | ≤ 182 characters | same | common network limit; confirm per operator |
+| SMS cost | KES 0.80–1.00 per SMS | docs/solution-brief.md | from aggregator documentation examples; **confirm tariff** |
+| Weather for "my plot" | Kimana climatology (NASA POWER) | `app/src/demo/area.ts` | **demo**: one area pack per sub-county in a deployment |

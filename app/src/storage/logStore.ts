@@ -11,6 +11,8 @@ export interface LogEntry {
   explanation?: { text: string; producer: 'template' | 'model'; model_id?: string; locale?: string };
   events?: { kind: string; at: string; plot_id?: string; data?: Record<string, unknown> }[];
   shared_with?: { party: string; at: string }[];
+  /** true for demo-scenario entries; they never mix with the farmer's own log. */
+  demo?: boolean;
 }
 
 export interface KV {
@@ -36,6 +38,9 @@ export class LogStore {
   }
   clear(): void {
     this.kv.removeItem(LogStore.KEY);
+  }
+  replace(entries: LogEntry[]): void {
+    this.kv.setItem(LogStore.KEY, JSON.stringify(entries));
   }
 }
 

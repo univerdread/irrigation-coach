@@ -70,11 +70,11 @@ describe('pause rule: one question, in a fixed order', () => {
     const plan = planFarm(farm([plot({ crop: { crop_id: 'tomato', stage: null, planting_date: '2026-07-20', provenance: 'reported' } })]));
     expect(plan.plots[0]!.status).toBe('due');
   });
-  it('repeated disagreement escalates to the extension officer', () => {
+  it('repeated disagreement (a second disagreeing check) escalates to the extension officer', () => {
     const plan = planFarm(
       farm([
         plot({
-          consecutive_disagreements: 2,
+          consecutive_disagreements: 1,
           moisture_check: { band: 'wet', observed_at: '2026-10-03T08:00', provenance: 'reported', source: 'feel_chart' },
         }),
       ]),

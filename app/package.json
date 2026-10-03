@@ -14,7 +14,8 @@
   "dependencies": {
     "@irrigation-coach/engine": "*",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react-dom": "^19.3.0",
+    "@irrigation-coach/channels": "*"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",

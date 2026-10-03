@@ -1,0 +1,32 @@
+{
+ "_meta": {
+  "locale": "sw",
+  "status": "DRAFT. Must be checked by a native Kiswahili speaker. Keep plain ASCII (GSM-7)."
+ },
+ "sms.pump": "Kocha wa pampu: washa pampu {duration} leo (lita {litres}). Jibu NIMEMALIZA ukimaliza.",
+ "sms.no_pump": "Kocha wa pampu: hakuna haja ya kuwasha pampu leo. Udongo bado una maji ya kutosha.",
+ "sms.no_pump_full": "Kocha wa pampu: hakuna haja ya kuwasha pampu leo. Udongo wa mizizi umejaa maji.",
+ "sms.ask_rain_since": "Kocha wa pampu: mvua kiasi gani tangu {since}? Jibu MVUA na mm kwenye chombo, mfano MVUA 5, au MVUA 0.",
+ "sms.ask_moisture_check": "Kocha wa pampu: chimba udongo kwenye mizizi na ufinye. Jibu KAVU, UNYEVU au MAJI.",
+ "sms.ask_second_check": "Kocha wa pampu: ukaguzi na hesabu ya maji havikubaliani. Kagua tena: jibu KAVU, UNYEVU au MAJI.",
+ "sms.escalate_extension_officer": "Kocha wa pampu: ukaguzi unaendelea kutokubaliana. Mwombe afisa wa ugani akague shamba.",
+ "sms.needs_agent": "Kocha wa pampu: usajili haujakamilika. Muone wakala wa pampu au afisa wa ugani.",
+ "sms.saved": "Imehifadhiwa, asante.",
+ "sms.help": "Kocha wa pampu: LEO, MVUA 5, NIMEMALIZA, NIMEMALIZA 90 (dakika), SIKUWASHA, KAVU/UNYEVU/MAJI, IMELOWA, ENGLISH.",
+ "sms.unknown": "Samahani, sijaelewa. Jibu MSAADA kupata maneno.",
+ "sms.not_registered": "Namba hii haijasajiliwa. Muone wakala wa pampu au afisa wa ugani.",
+ "sms.language": "Lugha imewekwa Kiswahili.",
+ "duration.h_m": "kwa saa {h} na dakika {m}",
+ "duration.h": "kwa saa {h}",
+ "duration.m": "kwa dakika {m}",
+ "ussd.menu": "Kocha wa pampu\n1. Mpango wa leo\n2. Ripoti mvua\n3. Nimewasha pampu\n4. Kagua udongo\n0. English",
+ "ussd.rain_q": "Mvua tangu {since}, kwa mm (0 kama hakuna):",
+ "ussd.pumped_q": "1. Kama nilivyoshauriwa\n2. Muda tofauti\n3. Sikuwasha",
+ "ussd.minutes_q": "Pampu iliwaka dakika ngapi?",
+ "ussd.check_q": "Chimba kwenye mizizi na ufinye udongo:\n1. Mkavu, unavunjika\n2. Unyevu, unashikamana\n3. Mbichi, unanata au unadondoka",
+ "ussd.bad_input": "Samahani, andika namba.",
+ "ussd.pump": "Washa pampu {duration} leo (lita {litres}). Piga tena uchague 3 ukimaliza.",
+ "ussd.ask_second_check": "Ukaguzi wa udongo na hesabu ya maji havikubaliani. Piga tena, chagua 4 ukague tena.",
+ "ussd.ask_moisture_check": "Piga tena, chagua 4 ukague udongo.",
+ "ussd.ask_rain_since": "Mvua kiasi gani tangu {since}? Piga tena uchague 2."
+}

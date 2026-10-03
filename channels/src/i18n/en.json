@@ -1,0 +1,32 @@
+{
+ "_meta": {
+  "locale": "en",
+  "status": "source"
+ },
+ "sms.pump": "Pump coach: run the pump {duration} today ({litres} L). Reply DONE when finished.",
+ "sms.no_pump": "Pump coach: no pumping needed today. The soil still holds enough water.",
+ "sms.no_pump_full": "Pump coach: no pumping needed today. The root zone is full.",
+ "sms.ask_rain_since": "Pump coach: how much rain since {since}? Reply RAIN and the mm in your tin, e.g. RAIN 5, or RAIN 0.",
+ "sms.ask_moisture_check": "Pump coach: dig soil at root depth and squeeze. Reply DRY, DAMP or WET.",
+ "sms.ask_second_check": "Pump coach: the soil check and the water count disagree. Check once more: reply DRY, DAMP or WET.",
+ "sms.escalate_extension_officer": "Pump coach: checks keep disagreeing. Please ask your extension officer to see the plot.",
+ "sms.needs_agent": "Pump coach: setup is not finished. Please see your pump dealer or extension officer.",
+ "sms.saved": "Saved, thank you.",
+ "sms.help": "Pump coach: TODAY, RAIN 5, DONE, DONE 90 (minutes run), SKIP, DRY/DAMP/WET, SOAKED, SWAHILI.",
+ "sms.unknown": "Sorry, not understood. Reply HELP for the words.",
+ "sms.not_registered": "This number is not registered. Please see your pump dealer or extension officer.",
+ "sms.language": "Language set to English.",
+ "duration.h_m": "for {h} h {m} min",
+ "duration.h": "for {h} h",
+ "duration.m": "for {m} min",
+ "ussd.menu": "Pump coach\n1. Today's plan\n2. Report rain\n3. I pumped\n4. Soil check\n0. Kiswahili",
+ "ussd.rain_q": "Rain since {since}, in mm (0 if none):",
+ "ussd.pumped_q": "1. As advised\n2. A different time\n3. I did not pump",
+ "ussd.minutes_q": "How many minutes did the pump run?",
+ "ussd.check_q": "Dig at root depth and squeeze the soil:\n1. Dry, crumbles\n2. Damp, holds together\n3. Wet, sticky or drips",
+ "ussd.bad_input": "Sorry, please enter a number.",
+ "ussd.pump": "Run the pump {duration} today ({litres} L). Dial again and choose 3 when done.",
+ "ussd.ask_second_check": "The soil check and the water count disagree. Dial again, choose 4 and check once more.",
+ "ussd.ask_moisture_check": "Dial again, choose 4 and check the soil.",
+ "ussd.ask_rain_since": "How much rain since {since}? Dial again and choose 2."
+}
