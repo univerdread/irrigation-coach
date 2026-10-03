@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:irrigation-coach:ai:question",
+  "title": "AI function: phrase one question (text). A deterministic validator decides WHICH input is missing; the model only phrases it. Template phrasing is the fallback.",
+  "$defs": {
+    "request": {
+      "type": "object",
+      "required": ["question", "locale"],
+      "properties": {
+        "question": { "$ref": "urn:irrigation-coach:farm-plan#/$defs/question" },
+        "locale": { "enum": ["en", "sw"] }
+      }
+    },
+    "response": {
+      "type": "object",
+      "required": ["text", "model_id"],
+      "properties": { "text": { "type": "string" }, "model_id": { "type": "string" } }
+    }
+  }
+}

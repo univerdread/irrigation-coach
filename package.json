@@ -1,0 +1,13 @@
+{
+  "name": "irrigation-coach",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Offline irrigation coach: pump minutes for one plot, today. Hack-Nation Challenge 4 (World Bank Small AI for Development).",
+  "workspaces": ["engine", "app"],
+  "scripts": {
+    "test": "npm run test -w engine && npm run test -w app",
+    "typecheck": "npm run typecheck -w engine && npm run typecheck -w app",
+    "dev": "npm run dev -w app",
+    "build": "npm run build -w app"
+  }
+}

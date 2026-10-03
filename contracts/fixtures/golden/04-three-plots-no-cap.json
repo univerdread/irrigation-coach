@@ -1,0 +1,187 @@
+{
+  "id": "04-three-plots-no-cap",
+  "description": "Three plots sharing one pump, no cap. 100 m2 each; deficits 10/6/4 mm; 80% efficiency; 1,000 L/h.",
+  "source": "Idea doc, build addendum golden test 4",
+  "fixture_assumptions": [
+    "A, B and C are declared due (assume_due) even though their deficits are below the 30 mm tomato trigger.",
+    "Priority A > B > C is a demo order, not agronomic advice."
+  ],
+  "input": {
+    "today": "2026-10-03",
+    "pump": {
+      "flow": {
+        "kind": "rate",
+        "value": 1000,
+        "unit": "L/h",
+        "provenance": "simulated"
+      }
+    },
+    "rain_model": {
+      "fraction": 1,
+      "ignore_below_mm": 0,
+      "provenance": "assumed",
+      "source": "fixture: rain is stated as effective rain"
+    },
+    "plots": [
+      {
+        "id": "A",
+        "label": "Tomatoes",
+        "area_m2": {
+          "value": 100,
+          "unit": "m2",
+          "provenance": "simulated"
+        },
+        "method": "drip",
+        "efficiency": {
+          "value": 0.8,
+          "unit": "fraction",
+          "provenance": "simulated",
+          "source": "fixture value"
+        },
+        "crop": {
+          "crop_id": "tomato",
+          "stage": "mid",
+          "provenance": "simulated"
+        },
+        "root_depth_m": {
+          "value": 0.6,
+          "unit": "m",
+          "provenance": "assumed"
+        },
+        "soil_awc_mm_per_m": {
+          "value": 125,
+          "unit": "mm/m",
+          "provenance": "simulated"
+        },
+        "deficit": {
+          "mm": 10,
+          "as_of": "2026-10-03",
+          "provenance": "simulated"
+        },
+        "rain_since_mm": {
+          "value": 0,
+          "unit": "mm",
+          "provenance": "simulated"
+        },
+        "assume_due": true
+      },
+      {
+        "id": "B",
+        "label": "Kale",
+        "area_m2": {
+          "value": 100,
+          "unit": "m2",
+          "provenance": "simulated"
+        },
+        "method": "drip",
+        "efficiency": {
+          "value": 0.8,
+          "unit": "fraction",
+          "provenance": "simulated",
+          "source": "fixture value"
+        },
+        "crop": {
+          "crop_id": "tomato",
+          "stage": "mid",
+          "provenance": "simulated"
+        },
+        "root_depth_m": {
+          "value": 0.6,
+          "unit": "m",
+          "provenance": "assumed"
+        },
+        "soil_awc_mm_per_m": {
+          "value": 125,
+          "unit": "mm/m",
+          "provenance": "simulated"
+        },
+        "deficit": {
+          "mm": 6,
+          "as_of": "2026-10-03",
+          "provenance": "simulated"
+        },
+        "rain_since_mm": {
+          "value": 0,
+          "unit": "mm",
+          "provenance": "simulated"
+        },
+        "assume_due": true
+      },
+      {
+        "id": "C",
+        "label": "Onions",
+        "area_m2": {
+          "value": 100,
+          "unit": "m2",
+          "provenance": "simulated"
+        },
+        "method": "drip",
+        "efficiency": {
+          "value": 0.8,
+          "unit": "fraction",
+          "provenance": "simulated",
+          "source": "fixture value"
+        },
+        "crop": {
+          "crop_id": "tomato",
+          "stage": "mid",
+          "provenance": "simulated"
+        },
+        "root_depth_m": {
+          "value": 0.6,
+          "unit": "m",
+          "provenance": "assumed"
+        },
+        "soil_awc_mm_per_m": {
+          "value": 125,
+          "unit": "mm/m",
+          "provenance": "simulated"
+        },
+        "deficit": {
+          "mm": 4,
+          "as_of": "2026-10-03",
+          "provenance": "simulated"
+        },
+        "rain_since_mm": {
+          "value": 0,
+          "unit": "mm",
+          "provenance": "simulated"
+        },
+        "assume_due": true
+      }
+    ],
+    "priority": [
+      "A",
+      "B",
+      "C"
+    ]
+  },
+  "expected": {
+    "status": "pump",
+    "total_litres": 2500,
+    "total_minutes": 150,
+    "plots": {
+      "A": {
+        "status": "due",
+        "requested_litres": 1250,
+        "allocated_litres": 1250,
+        "unmet_litres": 0,
+        "minutes": 75
+      },
+      "B": {
+        "status": "due",
+        "requested_litres": 750,
+        "allocated_litres": 750,
+        "unmet_litres": 0,
+        "minutes": 45
+      },
+      "C": {
+        "status": "due",
+        "requested_litres": 500,
+        "allocated_litres": 500,
+        "unmet_litres": 0,
+        "minutes": 30
+      }
+    }
+  }
+}

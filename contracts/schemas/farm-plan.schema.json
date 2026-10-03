@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:irrigation-coach:farm-plan",
+  "title": "Engine output: today's plan. Exact values; rounding happens only in the UI. This JSON is what the explainer model receives.",
+  "type": "object",
+  "required": ["engine_version", "today", "status", "flow_lpm", "cap_litres", "plots", "total_litres", "total_minutes", "data_quality"],
+  "properties": {
+    "engine_version": { "type": "string" },
+    "today": { "$ref": "urn:irrigation-coach:common#/$defs/date" },
+    "status": { "enum": ["pump", "no_pump", "paused"], "description": "pump = at least one plot gets water; paused = no minutes can be given until a question is answered." },
+    "question": { "$ref": "#/$defs/question" },
+    "flow_lpm": { "type": ["number", "null"] },
+    "cap_litres": { "type": ["number", "null"] },
+    "plots": { "type": "array", "items": { "$ref": "#/$defs/plot_plan" } },
+    "total_litres": { "type": "number", "minimum": 0 },
+    "total_minutes": { "type": "number", "minimum": 0 },
+    "data_quality": {
+      "type": "object",
+      "required": ["simulated", "provenances"],
+      "properties": {
+        "simulated": { "type": "boolean", "description": "true if any input is simulated. The UI must label the plan as simulated." },
+        "provenances": { "type": "array", "items": { "$ref": "urn:irrigation-coach:common#/$defs/provenance" } }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "question": {
+      "type": "object",
+      "required": ["key"],
+      "properties": {
+        "key": { "$ref": "urn:irrigation-coach:common#/$defs/question_key" },
+        "plot_id": { "type": "string" },
+        "params": { "type": "object", "additionalProperties": { "type": ["string", "number"] } }
+      },
+      "additionalProperties": false
+    },
+    "warning": {
+      "type": "object",
+      "required": ["code"],
+      "properties": {
+        "code": { "enum": ["salty_water", "clay_short_sets", "steep_slope_furrow", "fertilizer_logged", "water_scarce_no_expansion", "crop_proxy_parameters", "stage_lengths_placeholder"] },
+        "params": { "type": "object", "additionalProperties": { "type": ["string", "number"] } }
+      },
+      "additionalProperties": false
+    },
+    "plot_plan": {
+      "type": "object",
+      "required": ["plot_id", "status", "reason", "requested_litres", "allocated_litres", "unmet_litres", "minutes", "warnings", "assumptions"],
+      "properties": {
+        "plot_id": { "type": "string" },
+        "status": { "enum": ["due", "not_due", "paused"] },
+        "reason": { "enum": ["at_or_above_trigger", "below_trigger", "no_deficit", "missing_input", "contradiction", "escalate", "assumed_due"] },
+        "question": { "$ref": "#/$defs/question" },
+        "missing": { "type": "array", "items": { "$ref": "urn:irrigation-coach:common#/$defs/essential_input" } },
+        "taw_mm": { "type": "number" },
+        "trigger_mm": { "type": "number" },
+        "deficit_before_rain_mm": { "type": "number" },
+        "effective_rain_mm": { "type": "number" },
+        "deficit_mm": { "type": "number" },
+        "efficiency": { "type": "number" },
+        "area_m2": { "type": "number" },
+        "requested_litres": { "type": "number", "minimum": 0 },
+        "allocated_litres": { "type": "number", "minimum": 0 },
+        "unmet_litres": { "type": "number", "minimum": 0 },
+        "minutes": { "type": "number", "minimum": 0 },
+        "warnings": { "type": "array", "items": { "$ref": "#/$defs/warning" } },
+        "assumptions": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+.DS_Store
+*.log
+# data pipeline
+data/.venv/
+data/cache/
+data/out/*.tif
+__pycache__/
+# never commit raw photo datasets (consent + size); see content/photo-dataset-protocol.md
+photos/

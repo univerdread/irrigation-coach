@@ -1,0 +1,88 @@
+{
+  "id": "08-photo-contradicts-engine",
+  "description": "Engine says due (30 mm deficit) but a newer soil check says wet. The app picks no winner: no minutes, ask for a second check.",
+  "source": "Idea doc, 'How the parts correct each other' + pause rule (scaffold addition)",
+  "input": {
+    "today": "2026-10-03",
+    "pump": {
+      "flow": {
+        "kind": "rate",
+        "value": 12,
+        "unit": "m3/h",
+        "provenance": "simulated"
+      }
+    },
+    "rain_model": {
+      "fraction": 1,
+      "ignore_below_mm": 0,
+      "provenance": "assumed",
+      "source": "fixture: rain is stated as effective rain"
+    },
+    "plots": [
+      {
+        "id": "A",
+        "label": "Tomatoes",
+        "area_m2": {
+          "value": 1000,
+          "unit": "m2",
+          "provenance": "simulated",
+          "source": "worked example: quarter acre"
+        },
+        "method": "furrow",
+        "efficiency": {
+          "value": 0.6,
+          "unit": "fraction",
+          "provenance": "table",
+          "source": "methods.json furrow"
+        },
+        "crop": {
+          "crop_id": "tomato",
+          "stage": "mid",
+          "provenance": "simulated"
+        },
+        "root_depth_m": {
+          "value": 0.6,
+          "unit": "m",
+          "provenance": "assumed",
+          "source": "worked example (illustrative; FAO-56 Table 22 range is 0.7-1.5 m)"
+        },
+        "soil_awc_mm_per_m": {
+          "value": 125,
+          "unit": "mm/m",
+          "provenance": "simulated",
+          "source": "worked example: sandy loam"
+        },
+        "deficit": {
+          "mm": 30,
+          "as_of": "2026-10-03",
+          "provenance": "simulated"
+        },
+        "rain_since_mm": {
+          "value": 0,
+          "unit": "mm",
+          "provenance": "simulated"
+        },
+        "moisture_check": {
+          "band": "wet",
+          "observed_at": "2026-10-03T08:00:00+03:00",
+          "provenance": "simulated",
+          "source": "photo_model",
+          "mocked": true
+        }
+      }
+    ]
+  },
+  "expected": {
+    "status": "paused",
+    "question_key": "ask_second_check",
+    "total_litres": 0,
+    "total_minutes": 0,
+    "plots": {
+      "A": {
+        "status": "paused",
+        "reason": "contradiction",
+        "minutes": 0
+      }
+    }
+  }
+}

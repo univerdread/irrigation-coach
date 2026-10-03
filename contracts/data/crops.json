@@ -1,0 +1,77 @@
+{
+  "$comment": "Crop parameters for the FAO-56 single-crop-coefficient method. Every number carries its source. No Kenyan rows exist in FAO-56 Table 11, so stage lengths are placeholders from the closest climate row and MUST be replaced with local (county extension / KALRO) values before a pilot.",
+  "schema_version": "0.1.0",
+  "crops": [
+    {
+      "id": "tomato",
+      "names": { "en": "Tomato", "sw": "Nyanya" },
+      "kc": { "ini": 0.6, "mid": 1.15, "end": 0.8 },
+      "stage_days": { "ini": 30, "dev": 40, "mid": 40, "late": 25 },
+      "root_depth_m": { "min": 0.7, "max": 1.5 },
+      "p": 0.4,
+      "sources": {
+        "kc": "FAO-56 Table 12 (Kc end given as 0.70-0.90; midpoint used)",
+        "stage_days": "FAO-56 Table 11, 'Arid Region, January' row (placeholder: no Kenyan row)",
+        "root_depth_m": "FAO-56 Table 22",
+        "p": "FAO-56 Table 22 (for ETc ~5 mm/day)"
+      }
+    },
+    {
+      "id": "onion_dry",
+      "names": { "en": "Onion (bulb)", "sw": "Kitunguu" },
+      "kc": { "ini": 0.7, "mid": 1.05, "end": 0.75 },
+      "stage_days": { "ini": 15, "dev": 25, "mid": 70, "late": 40 },
+      "root_depth_m": { "min": 0.3, "max": 0.6 },
+      "p": 0.3,
+      "sources": {
+        "kc": "FAO-56 Table 12",
+        "stage_days": "FAO-56 Table 11, 'Mediterranean, April' row (placeholder: no Kenyan row)",
+        "root_depth_m": "FAO-56 Table 22",
+        "p": "FAO-56 Table 22"
+      }
+    },
+    {
+      "id": "cabbage",
+      "names": { "en": "Cabbage", "sw": "Kabichi" },
+      "kc": { "ini": 0.7, "mid": 1.05, "end": 0.95 },
+      "stage_days": { "ini": 40, "dev": 60, "mid": 50, "late": 15 },
+      "root_depth_m": { "min": 0.5, "max": 0.8 },
+      "p": 0.45,
+      "sources": {
+        "kc": "FAO-56 Table 12",
+        "stage_days": "FAO-56 Table 11, 'Calif. Desert, Sept' row (placeholder: no Kenyan row)",
+        "root_depth_m": "FAO-56 Table 22",
+        "p": "FAO-56 Table 22"
+      }
+    },
+    {
+      "id": "kale",
+      "names": { "en": "Kale (sukuma wiki)", "sw": "Sukuma wiki" },
+      "kc": { "ini": 0.7, "mid": 1.05, "end": 0.95 },
+      "stage_days": { "ini": 40, "dev": 60, "mid": 50, "late": 15 },
+      "root_depth_m": { "min": 0.5, "max": 0.8 },
+      "p": 0.45,
+      "proxy_for": "cabbage",
+      "sources": {
+        "kc": "PROXY: FAO-56 has no kale row; cabbage values used. Sukuma wiki is leaf-harvested for months, so the stage model is a rough fit.",
+        "stage_days": "PROXY: cabbage row (placeholder)",
+        "root_depth_m": "PROXY: cabbage, FAO-56 Table 22",
+        "p": "PROXY: cabbage, FAO-56 Table 22"
+      }
+    },
+    {
+      "id": "sweet_pepper",
+      "names": { "en": "Sweet pepper", "sw": "Pilipili hoho" },
+      "kc": { "ini": 0.6, "mid": 1.05, "end": 0.9 },
+      "stage_days": { "ini": 30, "dev": 40, "mid": 110, "late": 30 },
+      "root_depth_m": { "min": 0.5, "max": 1.0 },
+      "p": 0.3,
+      "sources": {
+        "kc": "FAO-56 Table 12",
+        "stage_days": "FAO-56 Table 11, 'Arid Region, October' row (placeholder: no Kenyan row)",
+        "root_depth_m": "FAO-56 Table 22",
+        "p": "FAO-56 Table 22"
+      }
+    }
+  ]
+}

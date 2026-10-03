@@ -1,0 +1,84 @@
+{
+  "id": "02-rain-after-trigger",
+  "description": "As 01, plus 20 mm effective rain: deficit 10 mm is below the trigger, so no irrigation yet, with the reason.",
+  "source": "Idea doc, build addendum golden test 2",
+  "input": {
+    "today": "2026-10-03",
+    "pump": {
+      "flow": {
+        "kind": "rate",
+        "value": 12,
+        "unit": "m3/h",
+        "provenance": "simulated"
+      }
+    },
+    "rain_model": {
+      "fraction": 1,
+      "ignore_below_mm": 0,
+      "provenance": "assumed",
+      "source": "fixture: rain is stated as effective rain"
+    },
+    "plots": [
+      {
+        "id": "A",
+        "label": "Tomatoes",
+        "area_m2": {
+          "value": 1000,
+          "unit": "m2",
+          "provenance": "simulated",
+          "source": "worked example: quarter acre"
+        },
+        "method": "furrow",
+        "efficiency": {
+          "value": 0.6,
+          "unit": "fraction",
+          "provenance": "table",
+          "source": "methods.json furrow"
+        },
+        "crop": {
+          "crop_id": "tomato",
+          "stage": "mid",
+          "provenance": "simulated"
+        },
+        "root_depth_m": {
+          "value": 0.6,
+          "unit": "m",
+          "provenance": "assumed",
+          "source": "worked example (illustrative; FAO-56 Table 22 range is 0.7-1.5 m)"
+        },
+        "soil_awc_mm_per_m": {
+          "value": 125,
+          "unit": "mm/m",
+          "provenance": "simulated",
+          "source": "worked example: sandy loam"
+        },
+        "deficit": {
+          "mm": 30,
+          "as_of": "2026-10-03",
+          "provenance": "simulated"
+        },
+        "rain_since_mm": {
+          "value": 20,
+          "unit": "mm",
+          "provenance": "simulated"
+        }
+      }
+    ]
+  },
+  "expected": {
+    "status": "no_pump",
+    "total_litres": 0,
+    "total_minutes": 0,
+    "plots": {
+      "A": {
+        "status": "not_due",
+        "reason": "below_trigger",
+        "deficit_mm": 10,
+        "trigger_mm": 30,
+        "requested_litres": 0,
+        "allocated_litres": 0,
+        "minutes": 0
+      }
+    }
+  }
+}

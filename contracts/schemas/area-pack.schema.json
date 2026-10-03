@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:irrigation-coach:area-pack",
+  "title": "Area data pack: everything location-specific the phone needs offline, built once per area by data/build_area_pack.py",
+  "type": "object",
+  "required": ["schema_version", "area_id", "name", "built_at", "grid", "layers", "climatology", "licenses"],
+  "properties": {
+    "schema_version": { "const": "0.1.0" },
+    "area_id": { "type": "string" },
+    "name": { "type": "string" },
+    "built_at": { "$ref": "urn:irrigation-coach:common#/$defs/datetime" },
+    "simulated": { "type": "boolean", "description": "true for synthetic demo packs. The UI must say so." },
+    "grid": {
+      "description": "Regular lat/lon grid (EPSG:4326). Row 0 is the northern edge; cells are row-major. Cell (r,c) covers lat in (north - (r+1)*cell_deg, north - r*cell_deg], lon in [west + c*cell_deg, west + (c+1)*cell_deg).",
+      "type": "object",
+      "required": ["west", "north", "cell_deg", "width", "height"],
+      "properties": {
+        "west": { "type": "number" },
+        "north": { "type": "number" },
+        "cell_deg": { "type": "number", "exclusiveMinimum": 0 },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "layers": {
+      "description": "Keyed by layer name. Required for the soil step: sand_pct, clay_pct, oc_g_per_kg. Optional: *_sd layers, slope_pct.",
+      "type": "object",
+      "required": ["sand_pct", "clay_pct", "oc_g_per_kg"],
+      "additionalProperties": { "$ref": "#/$defs/layer" }
+    },
+    "climatology": {
+      "type": "object",
+      "required": ["source", "lat", "lon", "tmax_c", "tmin_c", "rain_mm_per_day"],
+      "properties": {
+        "source": { "type": "string" },
+        "lat": { "type": "number" },
+        "lon": { "type": "number" },
+        "tmax_c": { "$ref": "#/$defs/monthly" },
+        "tmin_c": { "$ref": "#/$defs/monthly" },
+        "rain_mm_per_day": { "$ref": "#/$defs/monthly" }
+      },
+      "additionalProperties": false
+    },
+    "licenses": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "monthly": { "type": "array", "items": { "type": "number" }, "minItems": 12, "maxItems": 12 },
+    "layer": {
+      "type": "object",
+      "required": ["encoding", "transform", "nodata", "data_b64", "source"],
+      "properties": {
+        "encoding": { "const": "uint8" },
+        "transform": {
+          "description": "How to turn the stored byte x into the physical value. linear: x*scale+offset. expm1_div10: expm1(x/10) (iSDAsoil's encoding for organic carbon, g/kg).",
+          "oneOf": [
+            { "type": "object", "required": ["kind", "scale", "offset"], "properties": { "kind": { "const": "linear" }, "scale": { "type": "number" }, "offset": { "type": "number" } }, "additionalProperties": false },
+            { "type": "object", "required": ["kind"], "properties": { "kind": { "const": "expm1_div10" } }, "additionalProperties": false }
+          ]
+        },
+        "nodata": { "type": "integer", "minimum": 0, "maximum": 255 },
+        "unit": { "type": "string" },
+        "data_b64": { "type": "string", "description": "width*height bytes, row-major, base64" },
+        "source": { "type": "string" },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

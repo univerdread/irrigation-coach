@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:irrigation-coach:ai:soil-photo",
+  "title": "AI function: soil-photo classifier (image). Runs on the phone. The model teammate implements this; the app ships a mock that is always labelled mocked.",
+  "$defs": {
+    "request": {
+      "type": "object",
+      "required": ["image", "taps"],
+      "properties": {
+        "image": {
+          "type": "object",
+          "required": ["mime", "width", "height"],
+          "properties": {
+            "mime": { "enum": ["image/jpeg", "image/png", "image/webp"] },
+            "width": { "type": "integer" },
+            "height": { "type": "integer" },
+            "uri": { "type": "string", "description": "Local file/blob URI. Never a network URL." },
+            "b64": { "type": "string" }
+          }
+        },
+        "taps": {
+          "description": "The farmer's 2-3 taps from the ribbon/feel flow, passed as side information.",
+          "type": "object",
+          "properties": {
+            "forms_ball": { "type": "boolean" },
+            "ribbon": { "enum": ["none", "short", "medium", "long"] },
+            "feel": { "enum": ["gritty", "smooth", "neither"] }
+          }
+        },
+        "soil_prior": {
+          "description": "Optional: the map/ribbon texture estimate, so the model can condition on it.",
+          "type": "object",
+          "properties": { "sand_pct": { "type": "number" }, "clay_pct": { "type": "number" }, "texture_class": { "type": "string" } }
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "required": ["moisture_band", "confidence", "model_id", "mocked"],
+      "properties": {
+        "moisture_band": { "$ref": "urn:irrigation-coach:common#/$defs/moisture_band" },
+        "texture_group": { "type": ["string", "null"], "description": "USDA texture class name, only when the map is unsure" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1, "description": "Model score. NOT a calibrated probability; never shown as a percentage." },
+        "model_id": { "type": "string" },
+        "model_file_bytes": { "type": "integer" },
+        "inference_ms": { "type": "number", "description": "Observed on device. Record honestly; never fabricate." },
+        "mocked": { "type": "boolean" }
+      }
+    }
+  }
+}

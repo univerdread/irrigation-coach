@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:irrigation-coach:golden-fixture",
+  "title": "Language-neutral golden test. Any engine implementation (TS today, Kotlin/Dart later) must reproduce `expected` from `input`.",
+  "type": "object",
+  "required": ["id", "description", "source", "input", "expected"],
+  "properties": {
+    "id": { "type": "string" },
+    "description": { "type": "string" },
+    "source": { "type": "string" },
+    "fixture_assumptions": { "type": "array", "items": { "type": "string" } },
+    "input": { "$ref": "urn:irrigation-coach:farm-input" },
+    "expected": {
+      "type": "object",
+      "properties": {
+        "status": { "enum": ["pump", "no_pump", "paused"] },
+        "question_key": { "$ref": "urn:irrigation-coach:common#/$defs/question_key" },
+        "question_params": { "type": "object" },
+        "total_litres": { "type": "number" },
+        "total_minutes": { "type": "number" },
+        "plots": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "status": { "enum": ["due", "not_due", "paused"] },
+              "reason": { "type": "string" },
+              "deficit_mm": { "type": "number" },
+              "trigger_mm": { "type": "number" },
+              "requested_litres": { "type": "number" },
+              "allocated_litres": { "type": "number" },
+              "unmet_litres": { "type": "number" },
+              "minutes": { "type": "number" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

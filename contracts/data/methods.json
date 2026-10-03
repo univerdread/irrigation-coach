@@ -1,0 +1,9 @@
+{
+  "$comment": "Field application efficiency by irrigation method. These are textbook typical values, not measurements. Efficiency applies to pumped water only, never to rain.",
+  "schema_version": "0.1.0",
+  "methods": [
+    { "id": "furrow", "names": { "en": "Furrow / basin", "sw": "Mifereji" }, "efficiency": 0.6, "source": "Typical surface-irrigation field application efficiency (FAO Irrigation Water Management Training Manual 4 order of magnitude; idea doc uses 60%). Verify." },
+    { "id": "sprinkler", "names": { "en": "Sprinkler", "sw": "Kinyunyizio" }, "efficiency": 0.75, "source": "Typical sprinkler field application efficiency (FAO Training Manual 4 order of magnitude). Verify." },
+    { "id": "drip", "names": { "en": "Drip", "sw": "Matone" }, "efficiency": 0.9, "source": "Typical drip field application efficiency (idea doc uses ~90%). Verify." }
+  ]
+}

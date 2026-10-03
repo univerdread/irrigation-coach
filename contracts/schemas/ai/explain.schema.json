@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:irrigation-coach:ai:explain",
+  "title": "AI function: explanation (text). The model receives the engine's plan JSON and writes a short explanation. Every number in its text is checked against the JSON; any mismatch falls back to the template.",
+  "$defs": {
+    "request": {
+      "type": "object",
+      "required": ["plan", "locale", "allowed_numbers"],
+      "properties": {
+        "plan": { "$ref": "urn:irrigation-coach:farm-plan" },
+        "locale": { "enum": ["en", "sw"] },
+        "allowed_numbers": { "type": "array", "items": { "type": "number" }, "description": "Display-rounded numbers the text may contain (digits only)." },
+        "max_words": { "type": "integer", "default": 60 }
+      }
+    },
+    "response": {
+      "type": "object",
+      "required": ["text", "model_id"],
+      "properties": {
+        "text": { "type": "string" },
+        "model_id": { "type": "string" },
+        "inference_ms": { "type": "number" }
+      }
+    }
+  }
+}
